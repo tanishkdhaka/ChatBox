@@ -1,0 +1,104 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { supabaseComponent } from "@/lib/supabase";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+
+function page() {
+  const searchParams = useSearchParams();
+  const userName = searchParams.get("search");
+  const [info, setInfo] = useState<any>([]);
+  const [message, setMessage] = useState('')
+  const [size,setSize] = useState(0)
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data, error } = await supabaseComponent
+        .from("messages")
+        .select("*")
+        .order("id");
+
+      if (data) {
+        setInfo(data);
+      }
+    };
+    getData();
+  });
+  if(size!=info.length){
+    setSize(info.length)
+  }
+  const messageEl = useRef<HTMLDivElement>(null);
+  const formRef = useRef<any>(null);
+  useEffect(()=>{
+    if(messageEl.current){
+      messageEl.current.scrollIntoView();
+    }
+  },[size])
+  const handler = async () =>{
+    event?.preventDefault();
+     if(message){
+      const {data, error} = await supabaseComponent
+      .from('messages')
+      .insert(
+        {mess:message,
+          user:userName,
+
+        }
+      )
+     }
+     formRef.current.reset();
+    }
+  return (
+    <div className="grid grid-rows-10 w-[100vw] max-h-[100vh]  flex-col items-center gap-2">
+      <Card className="w-full md:min-w-[60%]  mx-auto max-w-screen-md row-span-9">
+        <CardHeader className="">
+          <CardTitle className="mx-auto text-primary text-2xl">
+            Chat Box
+          </CardTitle>
+          <CardDescription className="mx-auto">
+            Your User Name :- <span className="text-white">{userName}</span>
+          </CardDescription>
+        </CardHeader>
+        <div className=" w-full h-[2px]  my-2 -mt-2  bg-primary "></div>
+        <CardContent>
+        <div className=" h-[70vh] overflow-y-scroll overflow-x-hidden  ">
+        <div className="flex flex-col gap-2 ">
+            {info.map((src: any, index: any) => {
+              return userName == src.user &&( 
+              <div className="flex flex-col items-end ">
+               <Card className="px-4 py-2">
+                 <CardDescription className="flex text-xs opacity-80 justify-end">{src.user}</CardDescription>
+                 <p>{src.mess}</p>
+               </Card>
+              </div>
+            )||(
+              <div className="flex flex-col items-start  ">
+              <Card className="px-4 py-2 bg-primary ">
+                <CardDescription className="flex text-xs  text-black ">~{src.user}</CardDescription>
+                <p className="text-black">{src.mess}</p>
+              </Card>
+             </div>
+            )
+            })}
+          </div>
+
+        <div ref={messageEl}/>
+        </div>
+       
+        </CardContent>
+      </Card>
+      <form ref={formRef} className="grid mx-auto max-w-screen-md w-full md:min-w-[60%] grid-cols-4 gap-3 "><input type="text" onChange={(event)=>{setMessage(event.target.value)}} className=" rounded-lg outline-none px-4  col-span-3 bg-background border-2  " placeholder="Type Message ..."/> 
+          <Button className=" col-span-1" onClick={handler}>Submit</Button>
+            </form>
+    </div>
+  );
+}
+
+export default page;
