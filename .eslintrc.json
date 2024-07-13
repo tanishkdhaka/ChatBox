@@ -2,6 +2,6 @@
   "extends": "next/core-web-vitals",
   "rules": {
     "react-hooks/rules-of-hooks": "off",
-    "missing-suspense-with-csr-bailout":"off",
+    "missing-suspense-with-csr-bailout":"off"
   }
 }
