@@ -1,4 +1,5 @@
 "use client";
+import Crud from "@/components/Crud";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -72,8 +73,10 @@ function page() {
         <div className="flex flex-col gap-2 ">
             {info.map((src: any, index: any) => {
               return userName == src.user &&( 
-              <div className="flex flex-col items-end ">
+              <div className="flex flex-row justify-end gap-2">
+                 <Crud id={src.id}/>
                <Card className="px-4 py-2">
+               
                  <CardDescription className="flex text-xs opacity-80 justify-end">{src.user}</CardDescription>
                  <p>{src.mess}</p>
                </Card>
