@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Upload from "@/components/Upload";
 import { supabaseComponent } from "@/lib/supabase";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -79,6 +80,7 @@ function page() {
                
                  <CardDescription className="flex text-xs opacity-80 justify-end">{src.user}</CardDescription>
                  <p>{src.mess}</p>
+                 <img src={src.image} alt="" className="w-[200px]" />
                </Card>
               </div>
             )||(
@@ -86,6 +88,7 @@ function page() {
               <Card className="px-4 py-2 bg-primary ">
                 <CardDescription className="flex text-xs  text-black ">~{src.user}</CardDescription>
                 <p className="text-black">{src.mess}</p>
+                <img src={src.image} alt="" className="w-[200px]" />
               </Card>
              </div>
             )
@@ -97,8 +100,10 @@ function page() {
        
         </CardContent>
       </Card>
-      <form ref={formRef} className="grid mx-auto max-w-screen-md w-full md:min-w-[60%] grid-cols-4 gap-3 "><input type="text" onChange={(event)=>{setMessage(event.target.value)}} className=" rounded-lg outline-none px-4  col-span-3 bg-background border-2  " placeholder="Type Message ..."/> 
-          <Button className=" col-span-1" onClick={handler}>Submit</Button>
+      <form ref={formRef} className="grid mx-auto my-auto max-w-screen-md w-full md:min-w-[60%] grid-cols-8 md:grid-cols-10 gap-3 ">
+        <Upload user={userName||''} />
+        <input type="text" onChange={(event)=>{setMessage(event.target.value)}} className=" rounded-lg outline-none px-4  md:col-span-7 col-span-5 bg-background border-2  " placeholder="Type Message ..."/> 
+          <Button className=" col-span-2 md:col-span-2" onClick={handler}>Submit</Button>
             </form>
     </div>
   );

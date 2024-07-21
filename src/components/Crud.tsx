@@ -28,8 +28,8 @@ id:any
         isOpen&&(
             <div className='z-1 absolute flex items-center justify-center bg-cover bg-center backdrop-blur-sm w-[100vw] h-[100vh] top-0 left-0 '>
                    <div className='flex flex-col gap-2'>
-                    <button className='bg-red-700 rounded-lg px-4 py-2 text-lg'  onClick={del    }>Delete</button>
-                  
+                    <button className='bg-red-700 rounded-lg px-4 py-2 text-lg'  onClick={del}>Delete</button>
+                    <button className='bg-blue-400  rounded-lg px-4 py-2 text-lg'>Update</button>
                    </div>
             </div>
         )||( 
