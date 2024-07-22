@@ -75,7 +75,7 @@ function page() {
             {info.map((src: any, index: any) => {
               return userName == src.user &&( 
               <div className="flex flex-row justify-end gap-2">
-                 <Crud id={src.id}/>
+                 <Crud id={src.id} message={src.mess}/>
                <Card className="px-4 py-2">
                
                  <CardDescription className="flex text-xs opacity-80 justify-end">{src.user}</CardDescription>
